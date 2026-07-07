@@ -1,0 +1,135 @@
+schema: '2.0'
+stages:
+  transformation:
+    cmd: python -m src.pipelines.DataTransformationPipeline
+    deps:
+    - path: artifacts/dataingestion/participant_data.csv
+      hash: md5
+      md5: 12a842e312bfa9361844ac768eadc5fc
+      size: 300806
+    - path: src/pipelines/DataTransformationPipeline.py
+      hash: md5
+      md5: ff2e68590dc0d45c383c3a38be1b9d07
+      size: 988
+    outs:
+    - path: artifacts/datatransformation/gender_encoder.pkl
+      hash: md5
+      md5: e179261f6a2d35d4340c2ac066d24dd5
+      size: 250
+    - path: artifacts/datatransformation/test.csv
+      hash: md5
+      md5: 1b0ab831b8126356ed25d680f18e5410
+      size: 35502
+    - path: artifacts/datatransformation/train.csv
+      hash: md5
+      md5: 6f0f30517cba0fa5d3979be0922d7eee
+      size: 141438
+  training:
+    cmd: python -m src.pipelines.TrainingPipeline
+    deps:
+    - path: artifacts/datatransformation/test.csv
+      hash: md5
+      md5: 1b0ab831b8126356ed25d680f18e5410
+      size: 35502
+    - path: artifacts/datatransformation/train.csv
+      hash: md5
+      md5: 6f0f30517cba0fa5d3979be0922d7eee
+      size: 141438
+    - path: src/pipelines/TrainingPipeline.py
+      hash: md5
+      md5: 39c4b0cf7b9a00a25b949c2cdf6266cb
+      size: 131
+    params:
+      params.yaml:
+        train.experiment_no: 2
+        train.regression_hp:
+          loss:
+          - squared_error
+          - absolute_error
+          - huber
+          learning_rate:
+          - 1e-05
+          - 0.0003
+          - 0.008
+          - 0.02
+          - 0.01
+          n_estimators:
+          - 100
+          - 300
+          - 500
+          - 800
+          max_depth:
+          - 8
+          - 16
+          - 32
+          - 64
+          - 128
+          min_samples_leaf:
+          - 8
+          - 16
+          - 32
+          - 64
+          - 128
+    outs:
+    - path: artifacts/modeltraining/bench2_predictor.pkl
+      hash: md5
+      md5: 41073f9c88d0075dd62baa01df74f37a
+      size: 7766593
+    - path: artifacts/modeltraining/bench3_predictor.pkl
+      hash: md5
+      md5: a94b33d6d93c7417604e17c48da7a600
+      size: 5211157
+    - path: artifacts/modeltraining/deadlift2_predictor.pkl
+      hash: md5
+      md5: 498b68e4812c3b7fee077192d1a8adc2
+      size: 2733502
+    - path: artifacts/modeltraining/deadlift3_predictor.pkl
+      hash: md5
+      md5: 691cab1fb7a5546bf61feb073f13a156
+      size: 5949546
+    - path: artifacts/modeltraining/squat2_predictor.pkl
+      hash: md5
+      md5: 03d4c9c4f10e67b42e14b0452f7d235e
+      size: 5634004
+    - path: artifacts/modeltraining/squat3_predictor.pkl
+      hash: md5
+      md5: cfaae10851a750caa829c5d830f0bcc8
+      size: 19734606
+  evaluation:
+    cmd: python -m src.pipelines.EvaluationPipeline
+    deps:
+    - path: artifacts/datatransformation/test.csv
+      hash: md5
+      md5: 1b0ab831b8126356ed25d680f18e5410
+      size: 35502
+    - path: artifacts/modeltraining/bench2_predictor.pkl
+      hash: md5
+      md5: 41073f9c88d0075dd62baa01df74f37a
+      size: 7766593
+    - path: artifacts/modeltraining/bench3_predictor.pkl
+      hash: md5
+      md5: a94b33d6d93c7417604e17c48da7a600
+      size: 5211157
+    - path: artifacts/modeltraining/deadlift2_predictor.pkl
+      hash: md5
+      md5: 498b68e4812c3b7fee077192d1a8adc2
+      size: 2733502
+    - path: artifacts/modeltraining/deadlift3_predictor.pkl
+      hash: md5
+      md5: 691cab1fb7a5546bf61feb073f13a156
+      size: 5949546
+    - path: artifacts/modeltraining/squat2_predictor.pkl
+      hash: md5
+      md5: 03d4c9c4f10e67b42e14b0452f7d235e
+      size: 5634004
+    - path: artifacts/modeltraining/squat3_predictor.pkl
+      hash: md5
+      md5: cfaae10851a750caa829c5d830f0bcc8
+      size: 19734606
+    - path: src/pipelines/EvaluationPipeline.py
+      hash: md5
+      md5: 7c38bbe678e1837c6a8b7e80d778269e
+      size: 138
+    params:
+      params.yaml:
+        evaluate.experiment_no: 2

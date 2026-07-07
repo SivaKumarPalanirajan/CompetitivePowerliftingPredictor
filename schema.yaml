@@ -1,0 +1,12 @@
+REQUIRED_COLS:
+  Squat1: float64
+  Squat2: float64
+  Squat3: float64
+  Benchpress1: float64
+  Benchpress2: float64
+  Benchpress3: float64
+  Deadlift1: float64
+  Deadlift2: float64
+  Deadlift3: float64
+  Weight: float64
+  Gender: object

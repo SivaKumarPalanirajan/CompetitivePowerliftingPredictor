@@ -1,0 +1,15 @@
+mlflow<3
+pandas 
+numpy 
+streamlit
+selenium 
+seaborn
+scikit-learn
+scipy
+matplotlib
+optuna
+flask
+huggingface_hub
+ensure
+python-box
+dotenv

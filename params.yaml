@@ -1,0 +1,42 @@
+ingestion:
+  dir: artifacts/dataingestion
+  raw_data_filename: participant_data.csv
+
+transformation:
+  dir: artifacts/datatransformation
+  raw_data_filename: participant_data.csv
+  train_data_filename: train.csv
+  test_data_filename: test.csv
+  gender_encoder_path: gender_encoder.pkl
+
+train:
+  experiment_no: 2
+  dir: artifacts/modeltraining
+  train_path: artifacts/datatransformation/train.csv
+  test_path: artifacts/datatransformation/test.csv
+  regression_hp: {
+                    'loss': ['squared_error', 'absolute_error', 'huber'],
+                      "learning_rate": [.00001,.0003,.008,.02,.01],
+                      "n_estimators": [100,300,500,800],
+                      "max_depth": [8,16,32,64,128],
+                      "min_samples_leaf": [8,16,32,64,128]
+                  }
+                
+  bench2_model_path: bench2_predictor.pkl
+  bench3_model_path: bench3_predictor.pkl
+  deadlift2_model_path: deadlift2_predictor.pkl
+  deadlift3_model_path: deadlift3_predictor.pkl
+  squat2_model_path: squat2_predictor.pkl
+  squat3_model_path: squat3_predictor.pkl
+
+evaluate:
+  experiment_no: 2
+  model_dir: artifacts/modeltraining
+  test_path: artifacts/datatransformation/test.csv
+  bench2_model_path: bench2_predictor.pkl
+  bench3_model_path: bench3_predictor.pkl
+  deadlift2_model_path: deadlift2_predictor.pkl
+  deadlift3_model_path: deadlift3_predictor.pkl
+  squat2_model_path: squat2_predictor.pkl
+  squat3_model_path: squat3_predictor.pkl
+

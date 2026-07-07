@@ -1,0 +1,39 @@
+stages:
+  transformation:
+    cmd: python -m src.pipelines.DataTransformationPipeline
+    deps:
+    - artifacts/dataingestion/participant_data.csv
+    - src/pipelines/DataTransformationPipeline.py
+    outs:
+    - artifacts/datatransformation/gender_encoder.pkl
+    - artifacts/datatransformation/test.csv
+    - artifacts/datatransformation/train.csv
+  training:
+    cmd: python -m src.pipelines.TrainingPipeline
+    deps:
+    - artifacts/datatransformation/test.csv
+    - artifacts/datatransformation/train.csv
+    - src/pipelines/TrainingPipeline.py
+    params:
+    - train.experiment_no
+    - train.regression_hp
+    outs:
+    - artifacts/modeltraining/bench2_predictor.pkl
+    - artifacts/modeltraining/bench3_predictor.pkl
+    - artifacts/modeltraining/deadlift2_predictor.pkl
+    - artifacts/modeltraining/deadlift3_predictor.pkl
+    - artifacts/modeltraining/squat2_predictor.pkl
+    - artifacts/modeltraining/squat3_predictor.pkl
+  evaluation:
+    cmd: python -m src.pipelines.EvaluationPipeline
+    deps:
+    - artifacts/datatransformation/test.csv
+    - artifacts/modeltraining/bench2_predictor.pkl
+    - artifacts/modeltraining/bench3_predictor.pkl
+    - artifacts/modeltraining/deadlift2_predictor.pkl
+    - artifacts/modeltraining/deadlift3_predictor.pkl
+    - artifacts/modeltraining/squat2_predictor.pkl
+    - artifacts/modeltraining/squat3_predictor.pkl
+    - src/pipelines/EvaluationPipeline.py
+    params:
+    - evaluate.experiment_no

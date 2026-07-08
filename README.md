@@ -1,5 +1,8 @@
 # Competitive Powerlifting Predictor <br>
 
+## Streamlit Application UI 
+![Application UI](assets/UI.png)<br>
+
 ## Overview <br>
 Due to my background as a powerlifter, I designed this project with my domain knowledge.
 It is able to accurately predict results such as weights for 2nd lift and 3rd lift along with experimentation for predicting if a lift would be successfully.<br>

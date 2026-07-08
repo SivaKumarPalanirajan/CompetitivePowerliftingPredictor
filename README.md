@@ -1,7 +1,7 @@
 # Competitive Powerlifting Predictor <br>
 
-## Streamlit Application UI 
-![Application UI](assets/UI.png)<br>
+## Streamlit UI 
+![UI](assets/UI.png)<br>
 
 ## Overview <br>
 Due to my background as a powerlifter, I designed this project with my domain knowledge.
